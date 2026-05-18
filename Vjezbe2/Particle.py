@@ -31,6 +31,10 @@ class Particle:
         #print("Domet je",D,"metara")
         return D
     def plot_trajectory(self,dt):
+        self.v_x = self.v*np.cos(mt.radians(self.heta))
+        self.v_y = self.v*np.sin(mt.radians(self.heta))
+        self.x = [self.x_0]
+        self.y =[0]
         while self.y[-1] >= 0:
             self.__move(dt)
         plt.plot(self.x,self.y)
@@ -41,23 +45,14 @@ class Particle:
         D_anl = (self.v**2*np.sin(2*self.heta))/9.81
         odstupanja = []
         dt_ovi = []
-        while dt <= t:
-            D = self.range(dt)
+        current_dt = dt
+        while current_dt <= t:
+            D = self.range(current_dt)
             rj = (abs((D - D_anl))/D_anl)*100
             odstupanja.append(rj)
-            dt_ovi.append(dt)
-            dt += 0.01
+            dt_ovi.append(current_dt)
+            current_dt += 0.01
         plt.plot(dt_ovi,odstupanja)
         plt.xlabel("Iznos vremenskog koraka dt")
         plt.ylabel("Odstupanje dvaju rjesenja")
         plt.show()
-
-
-
-            
-
-
-
-        
-
-        
